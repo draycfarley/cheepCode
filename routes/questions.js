@@ -4,6 +4,14 @@ const router = express.Router();
 
 const Question = require('../models/Question');
 
+// TODO
+function createSubmission(question, user, answer){
+    submission=null;
+    question.submissions = quest.submissions.push(submission);
+    question.save().catch( err => res.status(404).json({success:false}));
+    return submission;
+}
+
 //@route POST api/questions
 //@desc create a question
 //@access Public
@@ -37,6 +45,16 @@ router.delete('/:id', (req, res) =>{
     Question.findById(req.params.id)
     .then(question => question.remove()
     .then(() => res.json({success: true})))
+    .catch(err => res.status(404).json({success:false}))
+});
+
+//@route POST api/questions/submit
+//@desc submit an answer to a question
+//@access Public
+router.post('/submit', (req, res) =>{
+    Question.findById(req.body.id)
+    .then(question =>
+        createSubmission(question, req.body.answer, req.body.user))
     .catch(err => res.status(404).json({success:false}))
 });
 
