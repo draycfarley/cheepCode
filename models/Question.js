@@ -15,13 +15,14 @@ const QuestionSchema = new Schema ({
         type: String,
         required: true
     },
+    author: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
     testCases:[{
         type: String,
         required: true
     }],
-    submission:[{
+    submissions:[{
         type: String,
-        postedBy: User.schema,
+        postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
         correct: Boolean
     }],
     comments: [{
