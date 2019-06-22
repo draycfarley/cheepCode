@@ -2,7 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
-const placeholder = require("./routes/api/placeholder");
+const users = require("./routes/users");
+const questions = require("./routes/questions");
 
 const app = express();
 
@@ -17,7 +18,8 @@ const db = require("./config/keys").mongoURI;
 mongoose.connect(db, {useNewUrlParser: true})
 .then(()=> console.log('Mongo DB connected'));
 
-app.use('/api/placeholder', placeholder);
+app.use('/api/users', users);
+app.use('/api/questions', questions);
 
 const port = process.env.PORT || 5000;
 

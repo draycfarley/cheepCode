@@ -1,17 +1,18 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const Question = require('../Question');
 
 const UserSchema = new Schema ({
     username:{
         type: String,
-        required:true
+        required: true
     },
-    password:{},
-    questions:[ {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question'
-    }]
+    password:{
+        type: String,
+        required: true
+    },
+    score:{
+        type: Number
+    }
 });
 
-module.exports = User= mongoose.model('user', UserSchema);
+module.exports = User= mongoose.model('User', UserSchema);
