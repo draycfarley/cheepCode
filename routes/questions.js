@@ -71,7 +71,37 @@ router.post('/submit', (req, res) =>{
     })
     .catch(err => res.status(404).json({success:false}));
 });
-    
+
+//@route POST api/questions/comments
+//@desc create a comment for a question
+//@access Public
+router.post('/comments', (req, res) =>{
+    Question.findById(req.body.question_id)
+    .then(question => {
+        question.comments=question.comments.concat({
+            text:req.body.text,
+            postedBy:req.body.user_id
+        });
+        question.save().then(question => res.json(question));
+    })
+    .catch(err => res.status(404).json({success:false}));    
+});
+
+//@route DELETE api/questions/comments
+//@desc delete a comment for a question
+//@access Public
+router.post('/comment', (req, res) =>{
+    Question.findById(req.body.question_id)
+    .then(question => {
+        console.log("ye");
+        question.comments=question.comments.filter(comment => comment.text!==req.body.text && comment.postedBy!==req.body.user_id);
+        question.save().then(question => res.json(question));
+    })
+    .catch(err => res.status(404).json({success:false}));    
+});
+
+
+
 
 module.exports = router;
 
