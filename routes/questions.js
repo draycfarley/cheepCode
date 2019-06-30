@@ -4,11 +4,22 @@ const router = express.Router();
 
 const Question = require('../models/Question');
 
-// TODO
-function createSubmission(question, user, answer){
-    submission=null;
-    question.submissions = quest.submissions.push(submission);
-    question.save().catch( err => res.status(404).json({success:false}));
+
+function evaluateUserInput(answer, functionName, testCases, userInput){
+    testCases.forEach(testCase => {
+        if(eval(answer+" "+functionName+"("+testCase+");") !== eval(userInput+" "+functionName+"("+testCase+");")) return false;
+    });
+    return true;
+}
+
+function createSubmission(question, user, userInput){
+    correctness=evaluateUserInput(question.answer, question.functionName, question.testCases, userInput);
+    const submission= {
+        text:userInput,
+        postedBy:user,
+        correct:correctness
+    };
+    console.log(submission);
     return submission;
 }
 
@@ -19,6 +30,7 @@ router.post('/', (req, res) =>{
     const newQuestion = new Question({
         title : req.body.title,
         description : req.body.description,
+        functionName:req.body.functionName,
         answer : req.body.answer,
         author : req.body.author,
         testCases : req.body.testCases,
@@ -52,10 +64,14 @@ router.delete('/:id', (req, res) =>{
 //@desc submit an answer to a question
 //@access Public
 router.post('/submit', (req, res) =>{
-    Question.findById(req.body.id)
-    .then(question =>
-        createSubmission(question, req.body.answer, req.body.user))
-    .catch(err => res.status(404).json({success:false}))
+    Question.findById(req.body.question_id)
+    .then(question => {
+        question.submissions=question.submissions.concat(createSubmission(question, req.body.user_id, req.body.answer));
+        question.save().then(question => res.json(question));
+    })
+    .catch(err => res.status(404).json({success:false}));
 });
+    
 
 module.exports = router;
+

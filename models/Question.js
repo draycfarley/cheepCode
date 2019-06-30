@@ -11,6 +11,10 @@ const QuestionSchema = new Schema ({
         type: String,
         required: true
     },
+    functionName: {
+        type: String,
+        required: true
+    },
     answer: {
         type: String,
         required: true
@@ -21,13 +25,19 @@ const QuestionSchema = new Schema ({
         required: true
     }],
     submissions:[{
-        type: String,
-        postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
-        correct: Boolean
+        text:{
+            type: String,
+            required:true
+        },
+        postedBy:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+        correct:{
+            type: String,
+            required:true
+        }
     }],
     comments: [{
         text: String,
-        postedBy: User.schema
+        postedBy: {type: mongoose.Schema.Types.ObjectId, ref: 'User'}
     }]
 
 });
