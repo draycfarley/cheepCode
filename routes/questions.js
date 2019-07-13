@@ -41,6 +41,15 @@ router.post('/', (req, res) =>{
     newQuestion.save().then(question => res.json(question));
 });
 
+//@route GET api/questions
+//@desc get all questions
+//@access Public
+router.get('/', (req, res) =>{
+    Question.find()
+    .then(questions => res.json(questions))
+    .catch(err => res.status(404).json({success:false}))
+});
+
 //@route GET api/questions/questions:id
 //@desc get a question
 //@access Public
