@@ -6,7 +6,9 @@ import ReactDOM from 'react-dom';
 import { Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import Login from './Login';
-import Page from './Page'
+import Page from './Page';
+import NewAccount from './NewAccount';
+import PostQuestion from "./PostQuestion"
 
 class Main extends React.Component{
  
@@ -16,8 +18,9 @@ class Main extends React.Component{
         <Switch>
         <Route exact path='/' component={Page(Home)}/>
         <Route exact path='/login' component={Page(Login)}/>
-        {/* <Route exact path='/postquestion' component={Page(PostQuestion)}/>
-        <Route path='/answer' component={Page(AnswerQuestion)}/>
+        <Route exact path='/createaccount' component={Page(NewAccount)}/>
+        <Route exact path='/postquestion' component={Page(PostQuestion)}/>
+        {/* <Route path='/answer' component={Page(AnswerQuestion)}/>
         <Route exact path ='/leaderboard' component={Page(Leaderboard)}/> */}
       </Switch>
       

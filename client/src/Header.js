@@ -19,10 +19,10 @@ class Header extends React.Component {
                             <li className="nav-item">
                                 <Link to='/login' className='nav-link'>Login</Link>
                             </li>
-                            {/* <li className="nav-item">
-                                <Link to='/postquestion'>Submit A Question</Link>
-                            </li>
                             <li className="nav-item">
+                                <Link to='/postquestion' className='nav-link'>Submit A Question</Link>
+                            </li>
+                            {/* <li className="nav-item">
                                <Link to='/answer/:question_id'>Answer Questions</Link>
                             </li>
                             <li className="nav-item">
