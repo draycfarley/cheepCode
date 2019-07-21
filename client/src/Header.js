@@ -22,12 +22,12 @@ class Header extends React.Component {
                             <li className="nav-item">
                                 <Link to='/postquestion' className='nav-link'>Submit A Question</Link>
                             </li>
-                            {/* <li className="nav-item">
-                               <Link to='/answer/:question_id'>Answer Questions</Link>
+                            <li className="nav-item">
+                               <Link className="nav-link" to='/answer/'>Answer Questions</Link>
                             </li>
                             <li className="nav-item">
-                            <Link to='/leaderboard'>Leaderboard</Link>
-                            </li> */}
+                            <Link  className="nav-link" to='/leaderboard'>Leaderboard</Link>
+                            </li>
                         </ul>
                         
                     </div>

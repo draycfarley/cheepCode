@@ -43,13 +43,13 @@ class PostQuestion extends React.Component{
         <div>
         <label>
           Description:
-          <input type="text" name="description" className="form-control" value={this.state.description} onChange={this.handleChange} />
+          <textarea name="description" className="form-control" value={this.state.description} onChange={this.handleChange} rows="8" cols="25" />
         </label>
         </div>
         <div>
         <label>
           Answer:
-          <input type="text" name="answer" className="form-control" value={this.state.answer} onChange={this.handleChange} />
+          <textarea name="answer" className="form-control" value={this.state.answer} onChange={this.handleChange} rows="8" cols="25" />
         </label>
         </div>
         <div>

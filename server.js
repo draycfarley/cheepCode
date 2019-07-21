@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const config= require("config");
 const users = require("./routes/users");
 const questions = require("./routes/questions");
 
@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 //DB Config
 
-const db = require("./config/keys").mongoURI;
+const db = config.get("mongoURI");
 
 mongoose.connect(db, {useNewUrlParser: true})
 .then(()=> console.log('Mongo DB connected'));

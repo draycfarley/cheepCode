@@ -1,14 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const Bcrypt = require("bcrypt");
-
+const config = require("config");
 const User = require('../models/User');
+const jwt = require("jsonwebtoken");
 
 //@route POST api/users
 //@desc create a user
 //@access Public
 router.post('/', (req, res) =>{
-    req.body.password = Bcrypt.hashSync(req.body.password, 10);
+    User.findById(req.params.username)
+    .then(user=> {
+        if (user)
+        return res.status(404).json({msg: "User exists already"})
+    
+    
+        req.body.password = Bcrypt.hashSync(req.body.password, 10);
 
     const newUser = new User({
         username: req.body.username,
@@ -17,8 +24,27 @@ router.post('/', (req, res) =>{
         score: 0
     });
 
-    newUser.save().then(user => res.json(user));
+
+    newUser.save().then(user =>{
+        jwt.sign(
+            {_id: user._id},
+            config.get("jwtSecret"),
+            {expiresIn:3600},
+            (err, token) => {
+                res.json({
+                    token,
+                    newUser: {
+                    id:user._id,
+                    username:user.username,
+                }
+            })
+            })
+    } );
+    
+}).catch(err=> res.status(400).json({msg:err}))
+
 });
+
 
 //@route GET api/users/users:id
 //@desc get a user
@@ -48,7 +74,7 @@ router.post('/login', (req, res) =>{
         return res.json({success:true});
         }
     )
-    .catch(err => res.status(404).json({success:false}))
+    .catch(err => res.status(400).json({success:false}))
 });
 
 //@route DELETE api/users/users:id
