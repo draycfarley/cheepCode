@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Question = require('../models/Question');
-
+const auth= require('../middleware/auth');
 
 function evaluateUserInput(answer, functionName, testCases, userInput){
     testCases.forEach(testCase => {

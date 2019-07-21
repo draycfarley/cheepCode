@@ -4,6 +4,7 @@ const Bcrypt = require("bcrypt");
 const config = require("config");
 const User = require('../models/User');
 const jwt = require("jsonwebtoken");
+const auth= require('../middleware/auth');
 
 //@route POST api/users
 //@desc create a user
@@ -29,11 +30,11 @@ router.post('/', (req, res) =>{
         jwt.sign(
             {_id: user._id},
             config.get("jwtSecret"),
-            {expiresIn:3600},
+            {expiresIn:7200},
             (err, token) => {
                 res.json({
                     token,
-                    newUser: {
+                    user: {
                     id:user._id,
                     username:user.username,
                 }
@@ -44,6 +45,7 @@ router.post('/', (req, res) =>{
 }).catch(err=> res.status(400).json({msg:err}))
 
 });
+
 
 
 //@route GET api/users/users:id
@@ -71,7 +73,19 @@ router.post('/login', (req, res) =>{
         if (!Bcrypt.compareSync(req.body.password, user.password)) {
             return res.json({success:false});
         }
-        return res.json({success:true});
+        jwt.sign(
+            {_id: user._id},
+            config.get("jwtSecret"),
+            {expiresIn:7200},
+            (err, token) => {
+                res.json({
+                    token,
+                    user: {
+                    id:user._id,
+                    username:user.username,
+                }
+            })
+            })
         }
     )
     .catch(err => res.status(400).json({success:false}))
@@ -80,7 +94,7 @@ router.post('/login', (req, res) =>{
 //@route DELETE api/users/users:id
 //@desc delete a user
 //@access Public
-router.delete('/:id', (req, res) =>{
+router.delete('/:id', auth, (req, res) =>{
     User.findById(req.params.id)
     .then(user => user.remove()
     .then(() => res.json({success: true})))
