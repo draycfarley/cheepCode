@@ -46,7 +46,14 @@ router.post('/', (req, res) =>{
 
 });
 
-
+//@route GET api/users/auth
+//@desc get a user
+//@access Private
+router.get('/auth', auth, (req, res) =>{
+    User.findById(req.user._id)
+    .select("-password")
+    .then(user=> res.json(user));
+});
 
 //@route GET api/users/users:id
 //@desc get a user
@@ -93,7 +100,7 @@ router.post('/login', (req, res) =>{
 
 //@route DELETE api/users/users:id
 //@desc delete a user
-//@access Public
+//@access Private
 router.delete('/:id', auth, (req, res) =>{
     User.findById(req.params.id)
     .then(user => user.remove()

@@ -5,6 +5,7 @@ import { throws } from 'assert';
 import ReactDOM from 'react-dom';
 
 function Page(WrappedComponent) {
+  
     return class extends React.Component {
       render() {
         // Wraps the input component in a container, without mutating it. Good!

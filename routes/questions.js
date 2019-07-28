@@ -38,7 +38,7 @@ router.post('/', (req, res) =>{
         comments : []
     });
 
-    newQuestion.save().then(question => res.json(question));
+    newQuestion.save().then(question => res.json(question)).catch(err => console.log(err));
 });
 
 //@route GET api/questions
