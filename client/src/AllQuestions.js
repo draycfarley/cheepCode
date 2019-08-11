@@ -11,10 +11,12 @@ class AllQuestions extends React.Component{
     constructor(props){
         super(props);
         this.state={questions:[]};
+        this.componentDidMount=this.componentDidMount.bind(this);
     }
 
     componentDidMount() {
-        axios.get('api/questions/')
+      
+        axios.get('http://localhost:3000/api/questions/')
         .then(res => {
           this.setState({ questions: res.data});
         }).catch(err =>
@@ -31,7 +33,7 @@ class AllQuestions extends React.Component{
             <ul>
             {
         questions.map(function(question) {
-          return <QuestionCard key={question._id} title={question.title} submissions={question.submissions.length}/>
+          return <QuestionCard key={question._id} id={question._id} title={question.title} submissions={question.submissions.length}/>
         })
        }
             </ul>

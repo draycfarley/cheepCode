@@ -6,9 +6,13 @@ const Question = require('../models/Question');
 const auth= require('../middleware/auth');
 
 function evaluateUserInput(answer, functionName, testCases, userInput){
-    testCases.forEach(testCase => {
-        if(eval(answer+" "+functionName+"("+testCase+");") !== eval(userInput+" "+functionName+"("+testCase+");")) return false;
-    });
+    for(var i=0; i<testCases.length; i++){
+        var testCase=testCases[i];
+        var eval1=eval((answer+" "+functionName+"("+testCase+");"));
+        var eval2=eval((userInput+" "+functionName+"("+testCase+");"));
+        if(eval1!= eval2)
+         return false;
+        }
     return true;
 }
 
@@ -22,6 +26,17 @@ function createSubmission(question, user, userInput){
     console.log(submission);
     return submission;
 }
+
+//@route GET api/questions
+//@desc get all questions
+//@access Public
+router.get('/', (req, res) =>{
+    console.log("get");
+    Question.find()
+    .then(questions => res.json(questions))
+    .catch(err => res.status(404).json({success:err}))
+});
+
 
 //@route POST api/questions
 //@desc create a question
@@ -39,15 +54,6 @@ router.post('/', (req, res) =>{
     });
 
     newQuestion.save().then(question => res.json(question)).catch(err => console.log(err));
-});
-
-//@route GET api/questions
-//@desc get all questions
-//@access Public
-router.get('/', (req, res) =>{
-    Question.find()
-    .then(questions => res.json(questions))
-    .catch(err => res.status(404).json({success:false}))
 });
 
 //@route GET api/questions/questions:id
@@ -73,10 +79,12 @@ router.delete('/:id', (req, res) =>{
 //@desc submit an answer to a question
 //@access Public
 router.post('/submit', (req, res) =>{
+    console.log("submit");
     Question.findById(req.body.question_id)
     .then(question => {
-        question.submissions=question.submissions.concat(createSubmission(question, req.body.user_id, req.body.answer));
-        question.save().then(question => res.json(question));
+        var sub=createSubmission(question, req.body.user_id, req.body.answer);
+        question.submissions=question.submissions.concat(sub);
+        question.save().then(question => res.json({correct:sub.correctness}));
     })
     .catch(err => res.status(404).json({success:false}));
 });

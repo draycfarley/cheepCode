@@ -10,7 +10,7 @@ import Page from './Page';
 import NewAccount from './NewAccount';
 import PostQuestion from "./PostQuestion";
 import AnswerQuestionLanding from "./AnswerQuestionLanding";
-import LeaderBoard from "./LeaderBoard";
+import AnswerQuestion from "./AnswerQuestion";
 
 class Main extends React.Component{
  
@@ -22,8 +22,8 @@ class Main extends React.Component{
         <Route exact path='/login' component={Page(Login)}/>
         <Route exact path='/createaccount' component={Page(NewAccount)}/>
         <Route exact path='/postquestion' component={Page(PostQuestion)}/>
-        <Route path='/answer' component={Page(AnswerQuestionLanding)}/>
-        <Route exact path ='/leaderboard' component={Page(LeaderBoard)}/>
+        <Route exact path='/answer' component={Page(AnswerQuestionLanding)}/>
+        <Route path='/answer/:id' component={Page(AnswerQuestion)}/>
       </Switch>
       
       )

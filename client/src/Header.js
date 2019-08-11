@@ -1,9 +1,5 @@
 import React from 'react';
 import './App.css'
-import PropTypes from 'prop-types'; // ES6
-import { throws } from 'assert';
-import ReactDOM from 'react-dom';
-
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component {
@@ -24,9 +20,6 @@ class Header extends React.Component {
                             </li>
                             <li className="nav-item">
                                <Link className="nav-link" to='/answer/'>Answer Questions</Link>
-                            </li>
-                            <li className="nav-item">
-                            <Link  className="nav-link" to='/leaderboard'>Leaderboard</Link>
                             </li>
                         </ul>
                         

@@ -1,10 +1,8 @@
 import React from 'react';
 import './App.css'
-import PropTypes from 'prop-types'; // ES6
-import { throws } from 'assert';
-import ReactDOM from 'react-dom';
 
-// Need to create a component for actually answering a question
+import AllQuestions from './AllQuestions';
+
 
 class AnswerQuestionLanding extends React.Component {
 
@@ -13,8 +11,8 @@ class AnswerQuestionLanding extends React.Component {
         return (
             
                 <div>
-                    <h1>Answer A question</h1>
-                    <button>Choose a random question</button>
+                    <h1>Choose a question!</h1>
+                    <AllQuestions/>
                 </div>
                 )
             }

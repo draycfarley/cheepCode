@@ -1,8 +1,5 @@
 import React from 'react';
 import './App.css'
-import PropTypes from 'prop-types'; // ES6
-import { throws } from 'assert';
-import ReactDOM from 'react-dom';
 import axios from 'axios';
 
 
